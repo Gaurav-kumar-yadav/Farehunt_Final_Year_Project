@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Travel Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(to right, #0066ff, #0033cc);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header .title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header .icon {
+            font-size: 24px;
+        }
+
+        .search-bar {
+            margin: 20px auto;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar input {
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .locations {
+            margin: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .location {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .location:last-child {
+            border-bottom: none;
+        }
+
+        .explore-section {
+            margin: 20px;
+        }
+
+        .explore-section h2 {
+            font-size: 20px;
+            color: #0033cc;
+        }
+
+        .explore-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .explore-option {
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .explore-option img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .explore-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .rapid-section {
+            margin: 20px;
+        }
+
+        .rapid-section h2 {
+            font-size: 20px;
+            color: #ff9900;
+        }
+
+        .rapid-destinations {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .rapid-destination {
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .rapid-destination img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .rapid-destination:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background: #0033cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .search-bar input {
+                width: 90%;
+            }
+
+            .explore-options, .rapid-destinations {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+
+            .explore-option, .rapid-destination {
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span class="title">Where are you going?</span>
+        <i class="fa-solid fa-bars icon"></i>
+    </div>
+
+    <div class="search-bar">
+        
+        <input type="text" placeholder="Search your destination">
+    </div>
+
+    <div class="locations">
+        <div class="location">
+            <span>Shantiniketan School</span>
+            <small>Bhadrappa layout, Kodigehalli Main Road...</small>
+        </div>
+        <div class="location">
+            <span>Majestic Bus Stand</span>
+            <small>Kempegowda, Gandhi Nagar, Bengaluru...</small>
+        </div>
+        <div class="location">
+            <span>Lulu Mall Bengaluru</span>
+            <small>Gopalapura, Binnipete, Bengaluru, Karn...</small>
+        </div>
+    </div>
+
+    <div class="explore-section">
+        <h2>Explore</h2>
+        <div class="explore-options">
+            <div class="explore-option">
+                <img src="/Project/assets/parcel img.webp" alt="Parcel">
+                <p>Parcel</p>
+            </div>
+            <div class="explore-option">
+                <img src="/Project/assets/auto.png" alt="Auto">
+                <p>Auto</p>
+            </div>
+            <div class="explore-option">
+                <img src="/Project/assets/Cab_economy.png" alt="Cab Economy">
+                <p>Cab Economy</p>
+            </div>
+            <div class="explore-option">
+                <img src="/Project/assets/bike.jpeg" alt="Bike">
+                <p>Bike</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="rapid-section">
+        <h2>Go Places with Rapido</h2>
+        <div class="rapid-destinations">
+            <div class="rapid-destination">
+                <img src="/Project/assets/airport.jpeg" alt="Airport">
+                <p>Kempegowda Airport</p>
+            </div>
+            <div class="rapid-destination">
+                <img src="/Project/assets/railway.jpg" alt="Railway">
+                <p>KSR Bengaluru Railway</p>
+            </div>
+            <div class="rapid-destination">
+                <img src="/Project/assets/bus station.jpeg" alt="Bus Station">
+                <p>Majestic Bus Station</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Travel App | <a href="#">Privacy Policy</a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Pickup Location</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff; /* White background */
+            color: #000; /* Dark text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .back-arrow {
+            text-decoration: none;
+            font-size: 2em;
+            color: #000;
+            margin-right: 10px;
+        }
+        
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 1.2em;
+            width: 100%;
+            color: #000;
+        }
+        
+        .options {
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .option .icon {
+            margin-right: 10px;
+            font-size: 1.4em;
+            color: #888;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="#" class="back-arrow">←</a>
+            <input type="text" placeholder="Select pickup location" class="search-input">
+        </div>
+        <div class="options">
+            <div class="option">
+                <span class="icon">◎</span>
+                <span>Your current location</span>
+            </div>
+            <div class="option">
+                <span class="icon"></span>
+                <span>Locate on map</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

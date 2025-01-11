@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FareHaunt Web Application</title>
+    <style>
+        /* Basic page styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        /* Styling for the container */
+        .container {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3498db; /* Change the color here (e.g., blue) */
+        }
+
+        /* Styling for each letter */
+        .letter {
+            display: inline-block;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="text-container">
+        <!-- The text will be dynamically written letter by letter -->
+    </div>
+
+    <script>
+        
+        // The string we want to animate, including space between FareHaunt and Web Application
+        const text = "FareHaunt Web Application";  // Three spaces added between FareHaunt and Web Application
+        const container = document.getElementById('text-container');
+
+        // Function to create span elements for each letter
+        function createLetterSpans() {
+            for (let i = 0; i < text.length; i++) {
+                const span = document.createElement('span');
+                span.classList.add('letter');
+                span.textContent = text[i];
+                container.appendChild(span);
+            }
+        }
+
+        // Function to reveal each letter in sequence
+        function revealLetters() {
+            const letters = document.querySelectorAll('.letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.opacity = 1;  // Make the letter visible
+                }, index * 150); // Delay each letter by 150ms
+            });
+        }
+
+        // Loop the animation continuously
+        function startTypingLoop() {
+            createLetterSpans();  // Create the letter spans
+            revealLetters();  // Reveal the letters one by one
+
+            // Reset the animation after a delay to make it loop
+            setTimeout(() => {
+                container.innerHTML = '';  // Clear the text container
+                startTypingLoop();  // Start the animation again
+            }, text.length * 150 + 1000);  // Delay based on the number of letters and a pause before looping
+        }
+
+        // Start the typing loop when the page loads
+        startTypingLoop();
+
+    </script>
+
+</body>
+</html>

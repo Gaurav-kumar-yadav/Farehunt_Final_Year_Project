@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ola Ride Options</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .header img {
+            height: 40px;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .tab.active {
+            background-color: #d4f1d4;
+            border-radius: 5px;
+            color: #111;
+        }
+
+        .ride-section {
+            margin-bottom: 20px;
+        }
+
+        .ride-section input, .ride-section select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .ride-options {
+            list-style: none;
+        }
+
+        .ride-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .ride-option img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .ride-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .ride-details {
+            margin-left: 10px;
+        }
+
+        .time {
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .ride-option {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ride-info {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="menu-icon">&#9776;</div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Ola_Cabs_logo.png" alt="Ola Logo">
+            <div class="profile-icon">&#128100;</div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active">Daily Rides</div>
+            <div class="tab">Outstation</div>
+            <div class="tab">Rentals</div>
+        </div>
+
+        <div class="ride-section">
+            <input type="text" placeholder="From (e.g., Sambhavi Boy's Hostel)">
+            <input type="text" placeholder="To (Search for a locality or landmark)">
+            <select>
+                <option value="now">Now</option>
+                <option value="later">Later</option>
+            </select>
+        </div>
+
+        <ul class="ride-options">
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="auto.jpg" alt="Auto">
+                    <div class="ride-details">
+                        <div class="title">Auto</div>
+                        <div class="description">Get an auto at your doorstep</div>
+                    </div>
+                </div>
+            </li>
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="mini.jpg" alt="Mini">
+                    <div class="ride-details">
+                        <div class="title">Mini</div>
+                        <div class="description">Comfy hatchbacks at pocket-friendly fares</div>
+                    </div>
+                </div>
+                <div class="time">6 min</div>
+            </li>
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="bike.jpg" alt="Bike">
+                    <div class="ride-details">
+                        <div class="title">Bike</div>
+                        <div class="description">Zip through traffic at affordable fares</div>
+                    </div>
+                </div>
+                <div class="time">3 min</div>
+            </li>
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="prime-sedan.png" alt="Prime Sedan">
+                    <div class="ride-details">
+                        <div class="title">Prime Sedan</div>
+                        <div class="description">Sedans with free wifi and top drivers</div>
+                    </div>
+                </div>
+                <div class="time">4 min</div>
+            </li>
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="primesuv.png" alt="Prime SUV">
+                    <div class="ride-details">
+                        <div class="title">Prime SUV</div>
+                        <div class="description">SUVs with free wifi and top drivers</div>
+                    </div>
+                </div>
+                <div class="time">8 min</div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

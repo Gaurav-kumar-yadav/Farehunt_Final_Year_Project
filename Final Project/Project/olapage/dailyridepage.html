@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ola Ride Options</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #89cff0, #ffa69e);
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header img {
+            height: 60px;
+            transition: transform 0.3s ease;
+        }
+
+        .header img:hover {
+            transform: scale(1.15);
+        }
+
+        .menu-icon, .profile-icon {
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        .menu-icon:hover, .profile-icon:hover {
+            color: #ad7767;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #fff;
+            background: #ff5722;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .tab.active {
+            background: #8f66ce;
+            font-weight: bold;
+            transform: scale(1.1);
+        }
+
+        .tab:hover {
+            background: #e64a19;
+        }
+
+        .ride-section input, .ride-section select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ride-section input:focus, .ride-section select:focus {
+            border-color: #ff5722;
+            box-shadow: 0 3px 8px rgba(255, 87, 34, 0.2);
+            outline: none;
+        }
+
+        .ride-options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ride-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f4f5f7;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ride-option:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .ride-option img {
+            height: 50px;
+            margin-right: 20px;
+            border-radius: 8px;
+        }
+
+        .ride-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .ride-details {
+            margin-left: 10px;
+        }
+
+        .ride-details .title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .ride-details .description {
+            font-size: 14px;
+            color: #555;
+        }
+        .make-circle{
+            border-radius: 20px;
+        }
+
+        .time {
+            font-size: 14px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .remove-line {
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .ride-option {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ride-info {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/Project/olapage/barpage.html" class="remove-line">
+                <div class="menu-icon">&#9776;</div>
+            </a>
+            <img src="ola.png" alt="Ola Logo" class="make-circle">
+            <div class="profile-icon">&#128100;</div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active">Daily Rides</div>
+        </div>
+
+        <div class="ride-section">
+            <input type="text" placeholder="From (e.g., Sambhavi Boy's Hostel)">
+            <input type="text" placeholder="To (Search for a locality or landmark)">
+            <select>
+                <option value="now">Now</option>
+                <option value="later">Later</option>
+            </select>
+        </div>
+
+        <ul class="ride-options">
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="auto.jpg" alt="Auto">
+                    <div class="ride-details">
+                        <div class="title">Auto</div>
+                        <div class="description">Get an auto at your doorstep</div>
+                    </div>
+                </div>
+            </li>
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="mini.jpg" alt="Mini">
+                    <div class="ride-details">
+                        <div class="title">Mini</div>
+                        <div class="description">Comfy hatchbacks at pocket-friendly fares</div>
+                    </div>
+                </div>
+            </li>
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="bike.jpg" alt="Bike">
+                    <div class="ride-details">
+                        <div class="title">Bike</div>
+                        <div class="description">Zip through traffic at affordable fares</div>
+                    </div>
+                </div>
+            </li>
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="prime-sedan.png" alt="Prime Sedan">
+                    <div class="ride-details">
+                        <div class="title">Prime Sedan</div>
+                        <div class="description">Sedans with free wifi and top drivers</div>
+                    </div>
+                </div>
+            </li>
+            <li class="ride-option">
+                <div class="ride-info">
+                    <img src="primesuv.png" alt="Prime SUV">
+                    <div class="ride-details">
+                        <div class="title">Prime SUV</div>
+                        <div class="description">SUVs with free wifi and top drivers</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Map Page</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: relative;
+            background: linear-gradient(to right, #42a5f5, #1e88e5);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+            transition: background-color 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .header:hover {
+            background: linear-gradient(to right, #1e88e5, #0d47a1);
+        }
+
+        .header img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: scale(1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .map-container:hover {
+            transform: scale(1.02);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .route-details {
+            padding: 20px;
+            background: linear-gradient(to top, #ffffff, #f5f5f5);
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin: 20px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .route-details h3 {
+            margin: 0 0 15px;
+            color: #1976d2;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .route-details .info {
+            margin: 10px 0;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .input-box {
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            background: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .input-box:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-box img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .input-field {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            flex: 0 0 30%;
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .buttons a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .buttons a.ola {
+            background: linear-gradient(to right, #ffeb3b, #ffc107);
+        }
+
+        .buttons a.uber {
+            background: linear-gradient(to right, #424242, #000);
+        }
+
+        .buttons a.home {
+            background: linear-gradient(to right, #42a5f5, #1e88e5);
+        }
+        .buttons a.rapido {
+            background: linear-gradient(to right, #ff8c00, #ff5722);
+        }
+        
+
+        .buttons a img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .location-options {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        .location-options .options-container {
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .location-options .option {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .location-options .option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .location-options .option:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            
+
+            .buttons a {
+                padding: 8px 12px;
+                font-size: 14px;
+                flex: 0 0 32%;
+            }
+        }
+
+        footer {
+            background: linear-gradient(to right, #1976d2, #0d47a1);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span><i class="fa-solid fa-map"></i> Map Page</span>
+    </div>
+
+    <div class="map-container">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.262300649484!2d77.60370861482284!3d13.12539859078153!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x123456789abcd!2sNitte%20Meenakshi%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
+            allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <div class="route-details">
+        <h3>Route Details</h3>
+        <div class="info">Latitude/Longitude: 13°07'40.4"N 77°35'16.7"E</div>
+        <div class="info">Location: 4HHQ+555 Bengaluru, Karnataka</div>
+
+        <div class="input-box" onclick="showLocationOptions()">
+            <i class="fa-solid fa-person"></i>
+            <input class="input-field" type="text" placeholder="Your current location" readonly>
+        </div>
+
+        <div class="input-box">
+            <i class="fa-solid fa-location-dot"></i>
+            <input class="input-field" type="text" placeholder="Enter destination">
+        </div>
+    </div>
+
+    <div class="buttons">
+        <a href="#" class="home">
+            <i class="fa-solid fa-home"></i> Home
+        </a>
+        <a href="/Project/olapage/dailyridepage.html" class="ola">
+            <img src="/Project/olapage/ola.png" alt="Ola"> Ola
+        </a>
+        <a href="/Project/uberpage/firstpage.html" class="uber">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="Uber"> Uber
+        </a>
+        <a href="/Project/uberpage/firstpage.html" class="uber">
+            <img src="/Project/mainPage/rapido_logo.webp" alt="Uber"> Rapido
+        </a>
+        
+        
+    </div>
+    
+
+    
+
+    
+    <script>
+        function showLocationOptions() {
+            document.getElementById('locationOptions').style.display = 'block';
+        }
+
+        function closeLocationOptions() {
+            document.getElementById('locationOptions').style.display = 'none';
+        }
+
+        function selectLocation(location) {
+            document.querySelector('.input-box input').value = location;
+            closeLocationOptions();
+        }
+    </script>
+</body>
+</html>
