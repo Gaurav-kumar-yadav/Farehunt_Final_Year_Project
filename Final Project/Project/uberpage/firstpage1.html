@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uber UI Clone with Map</title>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
+    type="text/css"
+  />
+  <title>FareHunt Maps</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #map {
+      height: 90vh;
+      width: 90vw;
+      margin: 20px auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background: #333;
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    header button {
+      padding: 10px;
+      background: #745698;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    #results {
+      margin-top: 20px;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: space-between; /* Ensures cards are spaced evenly */
+      flex-wrap: wrap; /* Allows cards to wrap to the next row if there isn't enough space */
+      gap: 10px; /* Adds space between cards */
+    }
+
+    .card {
+      width: 22%; /* Adjust width to fit 4 cards in a row */
+      padding: 10px;
+      background: #fff;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 5px;
+    }
+
+    .card p {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+  <script src="../map/map-functionality.js" defer></script>
+</head>
+<body>
+  <header>
+    <link rel="stylesheet" href="uberpagestyle1.css">
+    <h1>Uber</h1>
+    <a href="menupage.html">
+        <button>FareHunt</button>
+    </a>
+  </header>
+  <div class="container">
+    <div id="map"></div>
+    <div id="results">
+      <h2>Available Vehicle Types</h2>
+      <div class="cards">
+        <div class="card" id="auto-card">
+            <img src="auto.jpg" alt="Auto">
+            <p>Auto</p>
+        </div>
+        <div class="card" id="mini-card">
+            <img src="mini.jpg" alt="Mini">
+            <p>Mini</p>
+        </div>
+        <div class="card" id="prime-card">
+            <img src="prime.jpg" alt="Prime">
+            <p>Prime</p>
+        </div>
+        <div class="card" id="sedan-card">
+            <img src="sedan.jpg" alt="Sedan">
+            <p>Sedan</p>
+        </div>
+      </div>
+      <script>
+          document.addEventListener('DOMContentLoaded', () => {
+          const cards = document.querySelectorAll('.card');
+          cards.forEach(card => {
+               card.addEventListener('click', () => {
+               // Check if the card is already selected
+               if (card.classList.contains('selected')) {
+               // If selected, remove the class to unselect it
+                  card.classList.remove('selected');
+                } else {
+                  // Otherwise, remove 'selected' class from all cards
+                  cards.forEach(c => c.classList.remove('selected'));
+                  // Add 'selected' class to the clicked card
+                  card.classList.add('selected');
+                }
+            });
+       });
+    });
+    </script>
+    </div>
+  </div>
+</body>
+</html>
