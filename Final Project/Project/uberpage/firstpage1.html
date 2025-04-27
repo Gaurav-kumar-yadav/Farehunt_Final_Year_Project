@@ -4,17 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Uber UI Clone with Map</title>
-  <!-- Mapbox GL JS and CSS -->
-  <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
-  <!-- Mapbox Directions Plugin -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
   <link
     rel="stylesheet"
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
     type="text/css"
   />
-  <title>Uber Maps</title>
+  <title>FareHunt Maps</title>
   <style>
     body {
       margin: 0;
@@ -59,13 +57,13 @@
 
     .cards {
       display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
+      justify-content: space-between; /* Ensures cards are spaced evenly */
+      flex-wrap: wrap; /* Allows cards to wrap to the next row if there isn't enough space */
+      gap: 10px; /* Adds space between cards */
     }
 
     .card {
-      width: 22%;
+      width: 22%; /* Adjust width to fit 4 cards in a row */
       padding: 10px;
       background: #fff;
       border-radius: 8px;
@@ -83,16 +81,12 @@
       font-size: 16px;
       font-weight: bold;
     }
-
-    .fare-estimate {
-      color: #745698;
-      font-size: 18px;
-      margin-top: 5px;
-    }
   </style>
+  <script src="../map/map-functionality.js" defer></script>
 </head>
 <body>
   <header>
+    <link rel="stylesheet" href="uberpagestyle1.css">
     <h1>Uber</h1>
     <a href="menupage.html">
         <button>FareHunt</button>
@@ -104,89 +98,42 @@
       <h2>Available Vehicle Types</h2>
       <div class="cards">
         <div class="card" id="auto-card">
-            <img src="auto.png" alt="Auto">
+            <img src="auto.jpg" alt="Auto">
             <p>Auto</p>
-            <div class="fare-estimate">-</div>
         </div>
         <div class="card" id="mini-card">
             <img src="mini.jpg" alt="Mini">
             <p>Mini</p>
-            <div class="fare-estimate">-</div>
         </div>
         <div class="card" id="prime-card">
             <img src="prime.jpg" alt="Prime">
-            <p>Uber XL</p>
-            <div class="fare-estimate">-</div>
+            <p>Prime</p>
         </div>
         <div class="card" id="sedan-card">
             <img src="sedan.jpg" alt="Sedan">
             <p>Sedan</p>
-            <div class="fare-estimate">-</div>
         </div>
       </div>
+      <script>
+          document.addEventListener('DOMContentLoaded', () => {
+          const cards = document.querySelectorAll('.card');
+          cards.forEach(card => {
+               card.addEventListener('click', () => {
+               // Check if the card is already selected
+               if (card.classList.contains('selected')) {
+               // If selected, remove the class to unselect it
+                  card.classList.remove('selected');
+                } else {
+                  // Otherwise, remove 'selected' class from all cards
+                  cards.forEach(c => c.classList.remove('selected'));
+                  // Add 'selected' class to the clicked card
+                  card.classList.add('selected');
+                }
+            });
+       });
+    });
+    </script>
     </div>
   </div>
-
-  <script>
-    // Set your Mapbox access token
-    mapboxgl.accessToken = 'pk.eyJ1IjoibmloYWFsMTkwMyIsImEiOiJjbTFzdm00d3AwOWNyMmlzNmM2c3R5eGdpIn0.PV0B6e3t_BgfQyKyoE-vGw'; // Replace with your actual token
-
-    // Initialize the map
-    const map = new mapboxgl.Map({
-      container: 'map', // Container ID
-      style: 'mapbox://styles/mapbox/streets-v11', // Map style
-      center: [-74.5, 40], // Default center (longitude, latitude)
-      zoom: 9, // Default zoom level
-    });
-
-    // Add directions control
-    const directions = new MapboxDirections({
-      accessToken: mapboxgl.accessToken,
-    });
-
-    map.addControl(directions, 'top-left');
-
-    // Fetch fare estimates when a route is calculated
-    directions.on('route', async (e) => {
-      console.log('Route calculated:', e.route); // Debug log
-
-      const route = e.route[0];
-      const distance = route.distance / 1000; // Convert meters to kilometers
-      console.log('Distance (km):', distance); // Debug log
-
-      try {
-        const response = await fetch(`http://localhost:3000/api/fare?distance=${distance}`);
-        const data = await response.json();
-        console.log("API Response:", data); // Debugging log
-
-        if (!data || !data.estimations || !Array.isArray(data.estimations)) {
-            console.error("Unexpected data format:", data);
-            return;
-        }
-
-        // Mapping vehicle types to UI elements
-        const vehicleMapping = {
-            'uber_auto': '#auto-card .fare-estimate',
-            'uber_mini': '#mini-card .fare-estimate',
-            'uber_xl': '#prime-card .fare-estimate',
-            'uber_sedan': '#sedan-card .fare-estimate'
-        };
-
-        // Loop through estimations and update the UI
-        data.estimations.forEach(item => {
-            const selector = vehicleMapping[item.vehicle_type];
-            const element = document.querySelector(selector);
-
-            if (element) {
-                element.textContent = `Rs. ${item.estimated_fare}`;
-            } else {
-                console.warn(`Element not found for ${item.vehicle_type}`);
-            }
-        });
-    } catch (error) {
-        console.error("Error fetching fare estimates:", error);
-    }
-    });
-  </script>
 </body>
 </html>

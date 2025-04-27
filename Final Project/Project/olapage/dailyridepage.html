@@ -4,16 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ola Ride Options</title>
-    <!-- Mapbox GL JS and CSS -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
-    <!-- Mapbox Directions Plugin -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
-    <link
-        rel="stylesheet"
-        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
-        type="text/css"
-    />
     <style>
         * {
             margin: 0;
@@ -161,8 +151,7 @@
             font-size: 14px;
             color: #555;
         }
-
-        .make-circle {
+        .make-circle{
             border-radius: 20px;
         }
 
@@ -174,20 +163,6 @@
 
         .remove-line {
             text-decoration: none;
-        }
-
-        .fare-estimate {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ff5722;
-        }
-
-        #map {
-            height: 300px;
-            width: 100%;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 600px) {
@@ -205,7 +180,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="../olapage/barpage.html" class="remove-line">
+            <a href="/Project/olapage/barpage.html" class="remove-line">
                 <div class="menu-icon">&#9776;</div>
             </a>
             <img src="ola.png" alt="Ola Logo" class="make-circle">
@@ -216,11 +191,17 @@
             <div class="tab active">Daily Rides</div>
         </div>
 
-        <!-- Mapbox Map -->
-        <div id="map"></div>
+        <div class="ride-section">
+            <input type="text" placeholder="From (e.g., Sambhavi Boy's Hostel)">
+            <input type="text" placeholder="To (Search for a locality or landmark)">
+            <select>
+                <option value="now">Now</option>
+                <option value="later">Later</option>
+            </select>
+        </div>
 
         <ul class="ride-options">
-            <li class="ride-option" id="auto-option">
+            <li class="ride-option">
                 <div class="ride-info">
                     <img src="auto.jpg" alt="Auto">
                     <div class="ride-details">
@@ -228,9 +209,8 @@
                         <div class="description">Get an auto at your doorstep</div>
                     </div>
                 </div>
-                <div class="fare-estimate">-</div>
             </li>
-            <li class="ride-option" id="mini-option">
+            <li class="ride-option">
                 <div class="ride-info">
                     <img src="mini.jpg" alt="Mini">
                     <div class="ride-details">
@@ -238,9 +218,8 @@
                         <div class="description">Comfy hatchbacks at pocket-friendly fares</div>
                     </div>
                 </div>
-                <div class="fare-estimate">-</div>
             </li>
-            <li class="ride-option" id="bike-option">
+            <li class="ride-option">
                 <div class="ride-info">
                     <img src="bike.jpg" alt="Bike">
                     <div class="ride-details">
@@ -248,9 +227,8 @@
                         <div class="description">Zip through traffic at affordable fares</div>
                     </div>
                 </div>
-                <div class="fare-estimate">-</div>
             </li>
-            <li class="ride-option" id="prime-sedan-option">
+            <li class="ride-option">
                 <div class="ride-info">
                     <img src="prime-sedan.png" alt="Prime Sedan">
                     <div class="ride-details">
@@ -258,9 +236,8 @@
                         <div class="description">Sedans with free wifi and top drivers</div>
                     </div>
                 </div>
-                <div class="fare-estimate">-</div>
             </li>
-            <li class="ride-option" id="prime-suv-option">
+            <li class="ride-option">
                 <div class="ride-info">
                     <img src="primesuv.png" alt="Prime SUV">
                     <div class="ride-details">
@@ -268,72 +245,8 @@
                         <div class="description">SUVs with free wifi and top drivers</div>
                     </div>
                 </div>
-                <div class="fare-estimate">-</div>
             </li>
         </ul>
     </div>
-
-    <script>
-        // Set your Mapbox access token
-        mapboxgl.accessToken = 'pk.eyJ1IjoibmloYWFsMTkwMyIsImEiOiJjbTFzdm00d3AwOWNyMmlzNmM2c3R5eGdpIn0.PV0B6e3t_BgfQyKyoE-vGw'; // Replace with your actual token
-
-        // Initialize the map
-        const map = new mapboxgl.Map({
-            container: 'map', // Container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // Map style
-            center: [77.5946, 12.9716], // Default center (Bengaluru coordinates)
-            zoom: 12, // Default zoom level
-        });
-
-        // Add directions control
-        const directions = new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-        });
-
-        map.addControl(directions, 'top-left');
-
-        // Fetch fare estimates when a route is calculated
-        directions.on('route', async (e) => {
-            console.log('Route calculated:', e.route); // Debug log
-
-            const route = e.route[0];
-            const distance = (route.distance / 1000).toFixed(2); // Convert meters to kilometers
-            console.log('Distance (km):', distance); // Debug log
-
-            try {
-    const response = await fetch(`http://localhost:3000/api/fare?distance=${distance}`);
-    const data = await response.json();
-    console.log("API Response:", data); // Debugging log
-
-    if (!data || !data.estimations || !Array.isArray(data.estimations)) {
-        console.error("Unexpected data format:", data);
-        return;
-    }
-
-    // Mapping vehicle types to UI elements
-    const vehicleMapping = {
-        'ola_auto': '#auto-option .fare-estimate',
-        'ola_mini': '#mini-option .fare-estimate',
-        'ola_bike': '#bike-option .fare-estimate',
-        'ola_primesedan': '#prime-sedan-option .fare-estimate',
-        'ola_prime_suv': '#prime-suv-option .fare-estimate'
-    };
-
-    // Loop through estimations and update the UI
-    data.estimations.forEach(item => {
-        const selector = vehicleMapping[item.vehicle_type];
-        const element = document.querySelector(selector);
-
-        if (element) {
-            element.textContent = `Rs. ${item.estimated_fare}`;
-        } else {
-            console.warn(`Element not found for ${item.vehicle_type}`);
-        }
-    });
-} catch (error) {
-    console.error("Error fetching fare estimates:", error);
-}
-    });
-    </script>
 </body>
 </html>
