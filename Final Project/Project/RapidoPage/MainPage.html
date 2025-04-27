@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rapido Page</title>
+    <!-- Mapbox GL JS and CSS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- Mapbox Directions Plugin -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+    <link
+        rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
+        type="text/css"
+    />
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
         body {
@@ -33,6 +44,10 @@
 
         .header .icon {
             font-size: 24px;
+        }
+
+        .header img {
+            height: 40px;
         }
 
         .search-bar {
@@ -84,19 +99,21 @@
 
         .explore-options {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
+            justify-content: space-between; /* Distribute items evenly */
+            gap: 10px; /* Add space between items */
+            padding: 10px; /* Add padding for better spacing */
+            width: 100%; /* Ensure the container takes full width */
         }
 
         .explore-option {
+            flex: 1; /* Allow each item to grow and take equal space */
             text-align: center;
             background: #fff;
             border-radius: 10px;
             padding: 20px;
-            width: 120px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-width: 120px; /* Minimum width for each option */
         }
 
         .explore-option img {
@@ -147,6 +164,20 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
+        #map {
+            height: 300px;
+            width: 90%;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .fare-estimate {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff9900;
+        }
+
         footer {
             background: #0033cc;
             color: white;
@@ -182,72 +213,97 @@
 </head>
 <body>
     <div class="header">
-        <span class="title">Rapido</span>
+        <img src="../mainPage/rapido_logo.webp" alt="Rapido Logo">
         <i class="fa-solid fa-bars icon"></i>
     </div>
 
-    <div class="search-bar">
-        
-        <input type="text" placeholder="Search your destination">
-    </div>
-
-    <div class="locations">
-        <div class="location">
-            <span>Shantiniketan School</span>
-            <small>Bhadrappa layout, Kodigehalli Main Road...</small>
-        </div>
-        <div class="location">
-            <span>Majestic Bus Stand</span>
-            <small>Kempegowda, Gandhi Nagar, Bengaluru...</small>
-        </div>
-        <div class="location">
-            <span>Lulu Mall Bengaluru</span>
-            <small>Gopalapura, Binnipete, Bengaluru, Karn...</small>
-        </div>
-    </div>
+    <!-- Mapbox Map -->
+    <div id="map"></div>
 
     <div class="explore-section">
         <h2>Explore</h2>
         <div class="explore-options">
-            <div class="explore-option">
-                <img src="../assets/parcel img.webp" alt="Parcel">
-                <p>Parcel</p>
-            </div>
-            <div class="explore-option">
+            <div class="explore-option" id="auto-option">
                 <img src="../assets/auto.png" alt="Auto">
                 <p>Auto</p>
+                <div class="fare-estimate">-</div>
             </div>
-            <div class="explore-option">
+            <div class="explore-option" id="cab-economy-option">
                 <img src="../assets/Cab_economy.png" alt="Cab Economy">
                 <p>Cab Economy</p>
+                <div class="fare-estimate">-</div>
             </div>
-            <div class="explore-option">
+            <div class="explore-option" id="bike-option">
                 <img src="../assets/bike.jpeg" alt="Bike">
                 <p>Bike</p>
+                <div class="fare-estimate">-</div>
             </div>
         </div>
     </div>
 
-    <div class="rapid-section">
-        <h2>Go Places with Rapido</h2>
-        <div class="rapid-destinations">
-            <div class="rapid-destination">
-                <img src="../assets/airport.jpeg" alt="Airport">
-                <p>Kempegowda Airport</p>
-            </div>
-            <div class="rapid-destination">
-                <img src="../assets/railway.jpg" alt="Railway">
-                <p>KSR Bengaluru Railway</p>
-            </div>
-            <div class="rapid-destination">
-                <img src="../assets/bus station.jpeg" alt="Bus Station">
-                <p>Majestic Bus Station</p>
-            </div>
-        </div>
-    </div>
+    <script>
+        // Set your Mapbox access token
+        mapboxgl.accessToken = 'pk.eyJ1IjoibmloYWFsMTkwMyIsImEiOiJjbTFzdm00d3AwOWNyMmlzNmM2c3R5eGdpIn0.PV0B6e3t_BgfQyKyoE-vGw'; // Replace with your actual token
 
-    <footer>
-        &copy; 2025 Travel App | <a href="#">Privacy Policy</a>
-    </footer>
+        // Initialize the map
+        const map = new mapboxgl.Map({
+            container: 'map', // Container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // Map style
+            center: [77.5946, 12.9716], // Default center (Bengaluru coordinates)
+            zoom: 12, // Default zoom level
+        });
+
+        // Add directions control
+        const directions = new MapboxDirections({
+            accessToken: mapboxgl.accessToken,
+        });
+
+        map.addControl(directions, 'top-left');
+
+        // Fetch fare estimates when a route is calculated
+        directions.on('route', async (e) => {
+    console.log('Route calculated:', e.route); // Debug log
+
+    const route = e.route[0];
+    const distanceInMeters = route.distance; // Distance in meters
+    const distanceInKm = (distanceInMeters / 1000).toFixed(2); // Convert to kilometers and round to 2 decimal places
+    console.log('Distance (km):', distanceInKm); // Debug log
+
+    try {
+        // Fetch fare estimates from the API
+        const response = await fetch(`http://localhost:3000/api/fare?distance=${distanceInKm}`);
+        const data = await response.json();
+        console.log("API Response:", data); // Debugging log
+
+        // Check if the API response is valid
+        if (!data || !data.estimations || !Array.isArray(data.estimations)) {
+            console.error("Unexpected data format:", data);
+            return;
+        }
+
+        // Mapping vehicle types to UI elements
+        const vehicleMapping = {
+            'rapido_auto': '#auto-option .fare-estimate',
+            'rapido_cabeconomy': '#cab-economy-option .fare-estimate',
+            'rapido_bike': '#bike-option .fare-estimate',
+        };
+
+        // Loop through estimations and update the UI
+        data.estimations.forEach(item => {
+            const selector = vehicleMapping[item.vehicle_type]; // Get the CSS selector for the vehicle type
+            const element = document.querySelector(selector); // Find the corresponding UI element
+
+            if (element) {
+                // Update the fare estimate in the UI
+                element.textContent = `Rs. ${item.estimated_fare}`;
+            } else {
+                console.warn(`Element not found for vehicle type: ${item.vehicle_type}`);
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching fare estimates:", error);
+    }
+        });
+    </script>
 </body>
 </html>
